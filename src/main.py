@@ -6,9 +6,10 @@ def main():
     soup = BeautifulSoup(r.content, 'html.parser')
     s = soup.find('div', class_='browse_content') 
     content = s.find_all('div', class_='recommendation_desc') 
-    reviews = str(content).replace('[<div class="recommendation_desc">', '').replace('\<div>]', '').split('</div>, <div class="recommendation_desc">')
+    reviews = str(content).replace('[<div class="recommendation_desc">', '').replace('</div>]', '').split('</div>, <div class="recommendation_desc">')
 
-    print(reviews[0].strip())
+    for i in reviews:
+        print(i.strip() + "\n")
 
 if __name__ == "__main__":
     main()
