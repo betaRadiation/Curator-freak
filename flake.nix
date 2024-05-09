@@ -12,6 +12,7 @@
 	    nativeBuildInputs = with pkgs; [
 	      (pkgs.python3.withPackages (python-pkgs: [
 		python-pkgs.beautifulsoup4
+		python-pkgs.requests
 	      ]))
 	    ];
 	  };
