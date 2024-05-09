@@ -1,38 +1,20 @@
 {
-  description = "An empty project that uses Zig.";
+  description = "Python steam scraper";
 
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/master";
-    flake-utils.url = "github:numtide/flake-utils";
+  inputs.flake-utils.url = "github:numtide/flake-utils";
 
-    # Used for shell.nix
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
-  };
-
-  outputs = {
-    self,
-    nixpkgs,
-    flake-utils,
-    ...
-  } @ inputs: let
-    overlays = [
-    ];
-  in
-    flake-utils.lib.eachSystem systems (
-      system: let
-        pkgs = import nixpkgs;
-      in rec {
-        devShells.default = pkgs.mkShell {
-          nativeBuildInputs = with pkgs; [
-	    python
-          ];
-        };
-
-        # For compatibility with older versions of the `nix` binary
-        devShell = self.devShells.${system}.default;
-      }
-    );
+  outputs = { self, nixpkgs, flake-utils }:
+    flake-utils.lib.eachDefaultSystem
+      (system:
+        let pkgs = nixpkgs.legacyPackages.${system}; in
+        {
+          devShells.default = pkgs.mkShell {
+	    nativeBuildInputs = with pkgs; [
+	      (pkgs.python3.withPackages (python-pkgs: [
+		python-pkgs.beautifulsoup4
+	      ]))
+	    ];
+	  };
+        }
+      );
 }
