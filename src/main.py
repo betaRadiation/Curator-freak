@@ -8,8 +8,8 @@ def main():
     content = s.find_all('div', class_='recommendation_desc') 
     reviews = str(content).replace('[<div class="recommendation_desc">', '').replace('</div>]', '').split('</div>, <div class="recommendation_desc">')
 
-    for i in reviews:
-        print(i.strip() + "\n")
+    # for i in reviews:
+    print(reviews[0].strip() + "\n")
 
 if __name__ == "__main__":
     main()
